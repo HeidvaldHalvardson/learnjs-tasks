@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th><th>Surname</th><th>Age</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>John</td><td>Smith</td><td>10</td>
+    </tr>
+    <tr>
+      <td>Pete</td><td>Brown</td><td>15</td>
+    </tr>
+    <tr>
+      <td>Ann</td><td>Lee</td><td>5</td>
+    </tr>
+    <tr>
+      <td>Tom</td><td>Gray</td><td>7</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <script>
+    // В ней может быть больше строк.
+    //
+    // Напишите код для сортировки по столбцу "name".
+
+    const sortTable = (cell) => {
+      const table = document.querySelector('table')
+      const sortList = document.querySelectorAll('th')
+      let sortIndex
+      for (let i = 0; i < sortList.length; i++) {
+        if (sortList[i].textContent !== cell) continue
+        sortIndex = i
+      }
+
+      const sortRows = Array.from(document.querySelectorAll('tr')).slice(1)
+
+      sortRows.sort((itemA, itemB) => {
+        let a = itemA.cells[sortIndex].textContent
+        let b = itemB.cells[sortIndex].textContent
+
+        if (!isNaN(a)) {
+          a = +a
+          b = +b
+        }
+        return a > b ? 1 : -1
+      })
+
+      table.tBodies[0].append(...sortRows)
+    }
+
+    const tableHead = document.querySelector('table').querySelector('tr')
+
+
+    tableHead.addEventListener('click', (evt) => {
+      sortTable(evt.target.textContent)
+    })
+  </script>
+</body>
+</html>

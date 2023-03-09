@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .red {
+      color: red;
+    }
+
+    .green {
+      color: green;
+    }
+
+    .blue {
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <div><span id="hours" class="red">hh</span>:<span id="minutes" class="green">mm</span>:<span id="seconds" class="blue">ss</span></div>
+  <div>
+    <button id="start" type="button">Start</button>
+    <button id="stop" type="button">Stop</button>
+  </div>
+
+
+  <script>
+    const updateTime = () => {
+      let hours = document.querySelector('#hours')
+      let minutes = document.querySelector('#minutes')
+      let seconds = document.querySelector('#seconds')
+
+      hours.innerHTML = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()
+      minutes.innerHTML = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()
+      seconds.innerHTML = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds()
+    }
+
+    let timerId
+
+    const startClock = () => {
+      timerId = setInterval(updateTime, 1000)
+      updateTime()
+    }
+
+    const stopClock = () => {
+      clearInterval(timerId)
+    }
+
+
+    const buttonStart = document.querySelector('#start')
+    const buttonStop = document.querySelector('#stop')
+
+    buttonStart.addEventListener('click', startClock)
+    buttonStop.addEventListener('click', stopClock)
+  </script>
+
+</body>
+</html>

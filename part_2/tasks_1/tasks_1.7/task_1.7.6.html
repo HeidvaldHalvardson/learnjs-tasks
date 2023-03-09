@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="container"></div>
+
+  <script>
+
+//    Напишите функцию createTree, которая создаёт вложенный список ul/li из объекта.
+//
+//    Например:
+
+    const data = {
+      "Рыбы": {
+        "форель": {},
+        "лосось": {}
+      },
+
+      "Деревья": {
+        "Огромные": {
+          "секвойя": {},
+          "дуб": {}
+        },
+        "Цветковые": {
+          "яблоня": {},
+          "магнолия": {}
+        }
+      }
+    };
+
+    const container = document.getElementById('container')
+
+    const createTree = (container, data) => {
+      container.append((createTreeList(data)))
+    }
+
+    function createTreeList(data) {
+      const list = document.createElement('ul')
+
+      for (let item in data) {
+        const li = document.createElement('li')
+        li.innerHTML = item
+        list.append(li)
+        if (Object.keys(data[item]).length === 0) {
+          continue
+        }
+        li.append(createTreeList(data[item]))
+      }
+
+      return list
+    }
+
+    createTree(container, data); // создаёт дерево в контейнере
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="elem"></div>
+
+  <script>
+    // Напишите функцию createCalendar(elem, year, month).
+    //
+    // Вызов функции должен создать календарь для заданного месяца month в году year и вставить его в elem.
+    //
+    // Календарь должен быть таблицей, где неделя – это <tr>, а день – это <td>. У таблицы должен быть заголовок с названиями дней недели,
+    // каждый день – <th>, первым днём недели должен быть понедельник.
+    //
+    // Например, createCalendar(cal, 2012, 9) сгенерирует в cal следующий календарь:
+    //
+    //
+    // P.S. В этой задаче достаточно сгенерировать календарь, кликабельным его делать не нужно.
+
+    const elem = document.querySelector('#elem')
+
+    const createCalendar = (elem, year, month) => {
+      let table = `<table style="text-align: right;">
+                    <tr>
+                      <th>ПН</th>
+                      <th>ВТ</th>
+                      <th>СР</th>
+                      <th>ЧТ</th>
+                      <th>ПТ</th>
+                      <th>СБ</th>
+                      <th>ВС</th>
+                    </tr>
+                    <tr>`
+
+      const day = new Date (year, month - 1)
+
+      for (let i = 1; i < getWeekDay(day); i++) {
+        table += `<td></td>`
+      }
+
+      while(day.getMonth() === month - 1) {
+        table += `<td>${day.getDate()}</td>`
+
+        if (getWeekDay(day) % 7 === 0) {
+          table += `</tr><tr>`
+        }
+
+        day.setDate(day.getDate() + 1)
+      }
+
+      table += `</tr></table>`
+
+      elem.innerHTML = table
+    }
+
+    function getWeekDay(day) {
+      let weekDay = day.getDay()
+      if (weekDay === 0) weekDay = 7
+      return weekDay
+    }
+  </script>
+</body>
+</html>
