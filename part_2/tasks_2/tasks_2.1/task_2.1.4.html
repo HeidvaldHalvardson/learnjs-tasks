@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .button {
+      background-color: transparent;
+      border: none;
+    }
+
+    .arrow {
+      color: green;
+    }
+
+    .hover {
+      display: none;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    .list {
+      display: none;
+    }
+
+  </style>
+</head>
+<body>
+
+  <button type="button" id="button" class="button"><span class="open arrow">▶</span> <span class="close hover arrow">▼</span> Сладости (нажми меня)!
+  </button>
+  <ul class="list">
+    <li>Пирожное</li>
+    <li>Пончик</li>
+    <li>Мёд</li>
+  </ul>
+
+  <script>
+    // Создать меню, которое по нажатию открывается либо закрывается:
+
+    const list = document.querySelector('.list')
+    const button = document.querySelector('#button')
+    const open = document.querySelector('.open')
+    const close = document.querySelector('.close')
+
+    button.addEventListener('click', () => {
+      list.classList.toggle('list')
+      open.classList.toggle('hover')
+      close.classList.toggle('hover')
+    })
+
+  </script>
+</body>
+</html>

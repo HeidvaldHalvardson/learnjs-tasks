@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+
+  .wrapper {
+    width: 385px;
+    margin: 0 auto;
+    border: 1px solid #000000;
+
+    position: relative;
+    padding: 20px 35px;
+    border-radius: 30px;
+    background-color: #fff;
+  }
+
+  .arrow {
+    padding: 0;
+    background: transparent;
+    border-radius: 15px;
+    border: 1px solid gray;
+    font-size: 24px;
+    line-height: 24px;
+    color: #444;
+    display: block;
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+  }
+
+  .arrow--left {
+    left: 5px;
+  }
+
+  .arrow--right {
+    right: 5px;
+  }
+
+  .arrow:focus {
+    outline: none;
+  }
+
+  .arrow:hover {
+    background: #ccc;
+    cursor: pointer;
+  }
+
+  ul {
+    height: 130px;
+    width: 9999px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0;
+    transition: 1s all;
+  }
+
+  .inner {
+    width: 390px;
+    overflow: hidden;
+  }
+
+  ul img {
+    width: 130px;
+    height: 130px;
+    display: block;
+  }
+
+  ul li {
+    display: inline-block;
+  }
+</style>
+<body>
+
+
+
+  <div class="wrapper">
+    <div class="inner">
+      <ul id="list">
+        <li><img src="https://ru.js.cx/carousel/1.png"></li>
+        <li><img src="https://ru.js.cx/carousel/2.png"></li>
+        <li><img src="https://ru.js.cx/carousel/3.png"></li>
+        <li><img src="https://ru.js.cx/carousel/4.png"></li>
+        <li><img src="https://ru.js.cx/carousel/5.png"></li>
+        <li><img src="https://ru.js.cx/carousel/6.png"></li>
+        <li><img src="https://ru.js.cx/carousel/7.png"></li>
+        <li><img src="https://ru.js.cx/carousel/8.png"></li>
+        <li><img src="https://ru.js.cx/carousel/9.png"></li>
+        <li><img src="https://ru.js.cx/carousel/10.png"></li>
+      </ul>
+    </div>
+    <button class="arrow arrow--left">⇦</button>
+    <button class="arrow arrow--right">⇨</button>
+  </div>
+
+  <script>
+    // ...ваш код, который сделает карусель рабочей
+    const left = document.querySelector('.arrow--left')
+    const right = document.querySelector('.arrow--right')
+    const list = document.querySelector('#list')
+
+    let position = 0
+    const picWidth = 130
+    const lis = document.querySelectorAll('li')
+
+    right.addEventListener('click', () => {
+      position -= picWidth * 3
+      if (position < -(lis.length - 3) * picWidth) position = -(lis.length - 3) * picWidth
+      list.style.marginLeft = `${position}px`
+    })
+
+    left.addEventListener('click', () => {
+      position += picWidth * 3
+      if (position > 0) position = 0
+      list.style.marginLeft = `${position}px`
+    })
+  </script>
+
+</body>
+</html>

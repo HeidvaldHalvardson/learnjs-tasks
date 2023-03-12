@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 4px;
+    }
+    th {
+      cursor: pointer;
+    }
+    th:hover {
+      background: yellow;
+    }
+  </style>
+</head>
+
+<body>
+
+  <table id="grid">
+    <thead>
+    <tr>
+      <th data-type="number">Возраст</th>
+      <th data-type="string">Имя</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>5</td>
+      <td>Вася</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Петя</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>Женя</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>Маша</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>Илья</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const sortTable = (cell) => {
+      const table = document.querySelector('table')
+      const sortList = document.querySelectorAll('th')
+      let sortIndex
+      for (let i = 0; i < sortList.length; i++) {
+        if (sortList[i].dataset.type !== cell) continue
+        sortIndex = i
+      }
+
+      const sortRows = Array.from(document.querySelectorAll('tr')).slice(1)
+
+      sortRows.sort((itemA, itemB) => {
+        let a = itemA.cells[sortIndex].textContent
+        let b = itemB.cells[sortIndex].textContent
+
+        if (!isNaN(a)) {
+          a = +a
+          b = +b
+        }
+        return a > b ? 1 : -1
+      })
+
+      table.tBodies[0].append(...sortRows)
+    }
+
+    const tableHead = document.querySelector('table').querySelector('tr')
+
+
+    tableHead.addEventListener('click', (evt) => {
+      sortTable(evt.target.dataset.type)
+    })
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #mouse {
+      display: inline-block;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    #mouse:focus {
+      outline: 1px dashed black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p>Кликните по "изображению" мыши и перемещайте её с помощью клавиш со стрелками.</p>
+
+  <pre id="mouse">
+   _   _
+  (q\_/p)
+   /. .\
+  =\_t_/=   __
+   /   \   (
+  ((   ))   )
+  /\) (/\  /
+  \  Y  /-'
+   nn^nn
+  </pre>
+
+
+  <script>
+    const mouse = document.querySelector('#mouse')
+
+    mouse.addEventListener('click', (evt) => {
+      mouse.tabIndex = '0'
+      mouse.style.position = 'absolute'
+
+      mouse.style.top =  `${evt.target.getBoundingClientRect().top}px`
+      mouse.style.left = `${evt.target.getBoundingClientRect().left}px`
+      mouse.style.transition = '.5s ease-in-out'
+    })
+
+    mouse.addEventListener('keydown', (evt) => {
+      switch (evt.key) {
+        case 'ArrowUp':
+          evt.preventDefault()
+          mouse.style.top = `${parseInt(mouse.style.top) - mouse.offsetHeight}px`
+          break
+        case 'ArrowDown':
+          evt.preventDefault()
+          mouse.style.top = `${parseInt(mouse.style.top) + mouse.offsetHeight}px`
+          break
+        case 'ArrowLeft':
+          evt.preventDefault()
+          mouse.style.left = `${parseInt(mouse.style.left) - mouse.offsetWidth}px`
+          break
+        case 'ArrowRight':
+          evt.preventDefault()
+          mouse.style.left = `${parseInt(mouse.style.left) + mouse.offsetWidth}px`
+          break
+      }
+    })
+
+  </script>
+
+</body>
+</html>

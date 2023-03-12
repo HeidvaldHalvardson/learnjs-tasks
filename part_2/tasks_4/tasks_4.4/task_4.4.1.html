@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    #prompt-form {
+      display: inline-block;
+      padding: 5px 5px 5px 70px;
+      width: 200px;
+      border: 1px solid black;
+      background: white url(https://en.js.cx/clipart/prompt.png) no-repeat left 5px;
+      vertical-align: middle;
+    }
+
+    #prompt-form-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      background-color: rgba(180, 180, 180, 0.7);
+    }
+
+    .close {
+      display: none;
+    }
+
+    #prompt-form-container:before {
+      display: inline-block;
+      height: 100%;
+      content: '';
+      vertical-align: middle;
+    }
+
+    #prompt-form input[name="text"] {
+      display: block;
+      margin: 5px;
+      width: 180px;
+    }
+  </style>
+</head>
+<body>
+  <button id="show-button" type="button">Кликните, чтобы увидеть форму</button>
+  <div id="prompt-form-container" class="close">
+    <form id="prompt-form">
+      <div id="prompt-message">Введите что-нибудь...
+        <br>Пожалуйста..</div>
+      <input name="text" type="text">
+      <input type="submit" value="Ok">
+      <input type="button" name="cancel" value="Отмена">
+    </form>
+  </div>
+
+  <script>
+    const formWrapper = document.querySelector('#prompt-form-container')
+
+    function showPrompt(html, cb) {
+      const form = document.querySelector('#prompt-form')
+      const firstElem = form.elements[0]
+      const lastElem = form.elements[form.elements.length - 1]
+      const buttonCancel = form.cancel
+      const message = form.querySelector('#prompt-message')
+
+      formWrapper.classList.remove('close')
+      message.innerHTML = html
+
+      firstElem.focus()
+
+      firstElem.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Tab' && evt.shiftKey) {
+          evt.preventDefault()
+          lastElem.focus()
+        }
+      })
+
+      lastElem.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Tab' && !evt.shiftKey) {
+          evt.preventDefault()
+          firstElem.focus()
+        }
+      })
+
+      form.addEventListener('submit', (evt) => {
+        evt.preventDefault()
+        if(form.text.value) {
+          cb(form.text.value)
+          formWrapper.classList.add('close')
+          form.text.value = ''
+          document.removeEventListener('keydown', keydown)
+        }
+      })
+
+      let keydown
+
+      const cancelHandler = () => {
+        cb(null)
+        form.text.value = ''
+        formWrapper.classList.add('close')
+        buttonCancel.removeEventListener('click', cancelHandler)
+        document.removeEventListener('keydown', keydown)
+      }
+
+      buttonCancel.addEventListener('click', cancelHandler)
+
+      document.addEventListener('keydown', keydown = function(evt) {
+        if (evt.key === 'Escape') {
+          evt.preventDefault()
+          cancelHandler()
+        }
+      })
+    }
+
+    document.getElementById('show-button').onclick = function() {
+      showPrompt("Введите что-нибудь<br>...умное :)", function(value) {
+        console.log("Вы ввели: " + value);
+      });
+    };
+
+  </script>
+</body>
+</html>

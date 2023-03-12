@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+
+  <style>
+    .view,
+    .edit {
+      height: 150px;
+      width: 400px;
+      font-family: sans-serif;
+      font-size: 14px;
+      display: block;
+    }
+
+    .view {
+      padding: 2px;
+      border: 1px solid black;
+    }
+
+    .edit {
+      border: 3px solid blue;
+      padding: 0px;
+    }
+
+    .edit:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li>Кликните на div ниже, чтобы отредактировать текст.</li>
+    <li>Нажатие на Enter или потеря фокуса с ввода сохранят содержимое.</li>
+  </ul>
+
+  HTML-код разрешён.
+
+  <div id="view" class="view">Текст</div>
+
+  <script>
+    const view = document.querySelector('#view')
+
+    view.addEventListener('click', () => {
+      const edit = document.createElement('textarea')
+      edit.className = 'edit'
+      edit.value = view.innerHTML
+
+
+      edit.addEventListener('keydown', (evt) => {
+        if (evt.key === 'Enter') {
+          edit.blur()
+        }
+      })
+
+      edit.addEventListener('blur', () => {
+        view.innerHTML = edit.value
+        edit.replaceWith(view)
+      })
+
+      view.replaceWith(edit)
+      edit.focus()
+    })
+  </script>
+</body>
+</html>
